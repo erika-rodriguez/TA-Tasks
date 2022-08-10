@@ -7,20 +7,21 @@ package theater;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Scanner;
 
 /**
  *
  * @author Erika92
  */
 public class Theater {
+    private int id;
     private String theaterName;
     private int capacity;
     private ArrayList<Seats> seatList;
+    private final String CITY="New York";
     
     //constructors
     public Theater() {
-//        ArrayList<Seats> seatsList=new ArrayList();
+
     }
 
     public Theater(String theaterName, int capacity) {
@@ -34,19 +35,30 @@ public class Theater {
         this.seatList = seatList;
     }
 
-    public ArrayList <Theater> createTheaters(TheaterManagment tm){//funciona
-        Theater astor=new Theater("Astor", 10);
-        Theater colon=new Theater("Colon", 20);
-        Theater phoenix=new Theater("Phoenix", 30);
-        Theater royal=new Theater("Royal", 40);
+    public  ArrayList <Theater> createTheaters(TheaterManagement tm){
+        Theater t1=new Theater("Radio City", 10);
+        Theater t2=new Theater("Apollo", 20);
+        Theater t3=new Theater("Majestic", 30);
+        Theater t4=new Theater("Lincoln", 40);
+        Theater t5=new Theater("Broadway", 15);
 
         ArrayList <Theater> theatersList=new ArrayList();
-        theatersList.add(astor);
-        theatersList.add(colon);
-        theatersList.add(phoenix);
-        theatersList.add(royal);
-        
+        theatersList.add(t1);
+        theatersList.add(t2);
+        theatersList.add(t3);
+        theatersList.add(t4);
+        theatersList.add(t5);
         return theatersList;
+    }
+
+    public ArrayList <Theater> deleteTheater(ArrayList <Theater> theatersList, int option){
+        for (int i = 0; i < theatersList.size(); i++) {
+            if (theatersList.get(i).getId()==option){
+                theatersList.remove(i);
+                break;
+            }
+        }
+        return  theatersList;
     }
     
     public void readTheaters(ArrayList <Theater> theatersList){
@@ -54,28 +66,16 @@ public class Theater {
             System.out.println((i+1)+". "+"["+theatersList.get(i).getTheaterName()+"] ");
         }
     }
-    
-    
-    public void createSeats(Theater t){
-        Seats s=new Seats();
-        s.createSeats(t);
-        //s.showSeats(t);
-    }
-    
+
     public void checkAvailability(ArrayList<Seats> seatsList){
-        Seats s=new Seats();
-        s.checkAvailability(seatsList);
+        Seats.checkAvailability(seatsList);
     }
-    
-    public void selectSeat(TheaterManagment tm){
-        Seats s=new Seats();
-        s.selectSeat(tm);
-
-    }
-    
-
 
     //getters and setters
+    public int getId() {
+        return id;
+    }
+
     public int getCapacity() {
         return capacity;
     }
@@ -99,41 +99,32 @@ public class Theater {
     public void setSeatList(ArrayList<Seats> seatList) {
         this.seatList = seatList;
     }
-    
+
+    public String getCITY() {
+        return CITY;
+    }
         
     //toString HashCode Equals
     @Override
     public String toString() {
-        return "Theater{" + "theaterName=" + theaterName + ", capacity=" + capacity + '}';
+        return "Theater{" +
+                "id=" + id +
+                ", theaterName='" + theaterName + '\'' +
+                ", capacity=" + capacity +
+                ", seatList=" + seatList +
+                '}';
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Theater)) return false;
+        Theater theater = (Theater) o;
+        return id == theater.id && capacity == theater.capacity && Objects.equals(theaterName, theater.theaterName) && Objects.equals(seatList, theater.seatList);
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.theaterName);
-        hash = 37 * hash + this.capacity;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Theater other = (Theater) obj;
-        if (this.capacity != other.capacity) {
-            return false;
-        }
-        if (!Objects.equals(this.theaterName, other.theaterName)) {
-            return false;
-        }
-        return true;
+        return Objects.hash(id, theaterName, capacity, seatList);
     }
 }
     

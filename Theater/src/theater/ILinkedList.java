@@ -5,18 +5,13 @@
  */
 package theater;
 
-import java.util.Random;
-
 /**
  *
  * @author Erika92
  */
-public final class RandomBoolean extends Random{
 
-    public RandomBoolean() {
-    }
-    
-    public final void getRandomBoolean(){
-    }
-    
+public interface ILinkedList {
+    public CustomLinkedList createLinkedList();
+    public void showLinkedList(CustomLinkedList list);
+    public void modifyLinkedList(CustomLinkedList list, Object newElement);
 }

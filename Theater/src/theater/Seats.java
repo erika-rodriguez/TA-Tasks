@@ -7,15 +7,13 @@ package theater;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
  *
  * @author Erika92
  */
-public class Seats implements ISeatsManager{
+public class Seats {
     private boolean availableSeat=true;
     private int seatId;
 
@@ -30,7 +28,7 @@ public class Seats implements ISeatsManager{
 
     
     //methods
-    public  void createSeats(Theater t){
+    public static void createSeats(Theater t){
         ArrayList<Seats> seatsList=new ArrayList();
         RandomBoolean rb=new RandomBoolean();
         
@@ -41,7 +39,7 @@ public class Seats implements ISeatsManager{
         t.setSeatList(seatsList);
     }
     
-    public void showSeatsList(ArrayList<Seats> seatsList){
+    public static void showSeatsList(ArrayList<Seats> seatsList){
         System.out.println("");
         System.out.println("List of Seats: ");
         for (int i = 0; i < seatsList.size(); i++) {
@@ -50,8 +48,8 @@ public class Seats implements ISeatsManager{
         System.out.println("");
     }
     
-    @Override
-    public void checkAvailability(ArrayList<Seats> seatsList){
+    //@Override
+    public static void checkAvailability(ArrayList<Seats> seatsList){
         int availableSeats=0;
         int occupiedSeats=0;
         for (int i = 0; i < seatsList.size(); i++) {
@@ -60,46 +58,38 @@ public class Seats implements ISeatsManager{
             }else   occupiedSeats++;
         }     
         System.out.println("");
-        //System.out.println("The Hall is "+100*(occupied/(available+occupied))+"% occupied."); DOUBLE
+        System.out.println("The Hall is "+100*(occupiedSeats/(availableSeats+occupiedSeats))+"% occupied.");
         System.out.println("There are "+availableSeats+" seats free and "+occupiedSeats+" seats occupied.");
     }
     
     
-    @Override
-    public void selectSeat(TheaterManagment tm) throws IndexOutOfBoundsException,InputMismatchException{
+    
+    public static void selectSeat(TheaterManagement tm) throws NotAvailableSeatException,NotValidInputException{
         ArrayList<Seats> seatsList=tm.getTicket().getTheater().getSeatList();
         Scanner sc=new Scanner(System.in);
-        boolean exception=false;
-
-            do {
-            int option;
-                try{
-                    System.out.println("");
-                    System.out.println("Select a seat number:");
-                    option=sc.nextInt();
-
-                    for (int i = 0; i < seatsList.size(); i++) {
-
-                        if (seatsList.get(option-1).isAvailableSeat()==false) {
-                            System.out.println("The seat is not available. Try again.");
-                            exception=true;
-                            break;
-                        }else if (seatsList.get(option-1).isAvailableSeat() && seatsList.get(i).getSeatId()==option) {
-                            int seatNumber=seatsList.get(i).getSeatId();
-                            System.out.println("You have selected seat number "+seatNumber);
-                            tm.getTicket().setSeatNumber(seatNumber);
-                            seatsList.get(i).setAvailableSeat(false);
-                            exception=false;
-                            break;
-                        }
-                    }
-                }catch (IndexOutOfBoundsException|InputMismatchException e) {
-                        System.out.println("Please, enter a valid option."); 
-                        sc.next();
-                        exception=true;
+        int option;
+        System.out.println("");
+        System.out.println("Select a seat number:");
+        if (sc.hasNextInt()) {
+            option=sc.nextInt();
+            for (int i = 0; i < seatsList.size(); i++) {
+                if (seatsList.get(option-1).isAvailableSeat()==false) {
+                    sc.next();
+                    throw new NotAvailableSeatException ("The seat is not available. Try again.");
+                }else if (seatsList.get(option-1).isAvailableSeat() && seatsList.get(i).getSeatId()==option) {
+                    int seatNumber=seatsList.get(i).getSeatId();
+                    System.out.println("You have selected seat number "+seatNumber);
+                    tm.getTicket().setSeatNumber(seatNumber);
+                    seatsList.get(i).setAvailableSeat(false);
+                    break;
                 }
-                
-            } while (exception);
+            } 
+        }
+        else    {
+            sc.next();
+            throw new NotValidInputException("That is not a valid input.");
+        }
+
 
     }
 //    public void Ocupation(int capacity){

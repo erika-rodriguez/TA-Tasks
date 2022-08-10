@@ -5,15 +5,17 @@
  */
 package theater;
 
-import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 /**
  *
  * @author Erika92
  */
-public interface ISeatsManager {
-    
-    public void checkAvailability(ArrayList<Seats> seatsList);
-    public void selectSeat(TheaterManagment tm);
+public class NotValidInputException extends InputMismatchException{
+
+    public NotValidInputException(String string) {
+        super(string);
+    }
+
     
 }

@@ -5,18 +5,14 @@
  */
 package theater;
 
-import java.util.Random;
-
 /**
  *
  * @author Erika92
  */
-public final class RandomBoolean extends Random{
+public class NotValidCategoryException extends Exception{
 
-    public RandomBoolean() {
-    }
-    
-    public final void getRandomBoolean(){
+    public NotValidCategoryException(String string) {
+        super(string);
     }
     
 }

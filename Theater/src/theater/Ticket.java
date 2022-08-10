@@ -14,6 +14,7 @@ import java.util.Objects;
 public class Ticket {
     private int ticketNumber;
     private int seatNumber;
+    private double price;
     private Play play;
     private Theater theater;
 
@@ -21,18 +22,24 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(int ticketNumber, int seatNumber, Play play, Theater theater) {
+    public Ticket(int ticketNumber, int seatNumber,double price, Play play, Theater theater) {
         this.ticketNumber = ticketNumber;
         this.seatNumber = seatNumber;
+        this.price=price;
         this.play = play;
         this.theater = theater;
     }
-    
     //getters and setters
+    public double getPrice() {
+        return price;
+    }
+    public void setPrice(double price) {    
+        this.price = price;
+    }
+
     public int getTicketNumber() {
         return ticketNumber;
     }
-
     public void setTicketNumber(int ticketNumber) {
         this.ticketNumber = ticketNumber;
     }
@@ -40,7 +47,6 @@ public class Ticket {
     public int getSeatNumber() {
         return seatNumber;
     }
-
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
     }
@@ -48,7 +54,6 @@ public class Ticket {
     public Play getPlay() {
         return play;
     }
-
     public void setPlay(Play play) {
         this.play = play;
     }
@@ -56,7 +61,6 @@ public class Ticket {
     public Theater getTheater() {
         return theater;
     }
-
     public void setTheater(Theater theater) {
         this.theater = theater;
     }

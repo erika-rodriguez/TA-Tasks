@@ -5,18 +5,14 @@
  */
 package theater;
 
-import java.util.Random;
-
 /**
  *
  * @author Erika92
  */
-public final class RandomBoolean extends Random{
+public class NotAvailableSeatException extends Exception{
 
-    public RandomBoolean() {
-    }
-    
-    public final void getRandomBoolean(){
+    public NotAvailableSeatException(String string) {
+        super(string);
     }
     
 }
